@@ -12,6 +12,7 @@ namespace HotelReservationEngine
     {
         private static IServiceProvider _serviceProvider;
         private static IReservationService _reservationService;
+        
 
         static void Main(string[] args)
         {
@@ -20,7 +21,7 @@ namespace HotelReservationEngine
             ConfigureServices(services);
             _serviceProvider = services.BuildServiceProvider();
 
-            // Initialize database
+            //InitializeDatabase
             InitializeDatabase();
 
             _reservationService = _serviceProvider.GetService<IReservationService>();
@@ -50,12 +51,12 @@ namespace HotelReservationEngine
         {
             while (true)
             {
-                Console.WriteLine("\n=== MAIN MENU ===");
+                Console.WriteLine("\n====================MAIN MENU=============================");
                 Console.WriteLine("1. Manage Rooms");
                 Console.WriteLine("2. Manage Reservations");
                 Console.WriteLine("3. Search Available Rooms");
                 Console.WriteLine("4. Exit");
-                Console.Write("Select option: ");
+                Console.WriteLine("Select Option:");
 
                 var choice = Console.ReadLine();
 
@@ -71,10 +72,10 @@ namespace HotelReservationEngine
                         SearchAvailableRooms();
                         break;
                     case "4":
-                        Console.WriteLine("Thank you for using Hotel Reservation Engine!");
+                        Console.WriteLine("Thank you for using our services");
                         return;
                     default:
-                        Console.WriteLine("Invalid option!");
+                        Console.WriteLine("Please choose valid option!");
                         break;
                 }
             }
@@ -84,13 +85,13 @@ namespace HotelReservationEngine
         {
             while (true)
             {
-                Console.WriteLine("\n=== ROOM MANAGEMENT ===");
-                Console.WriteLine("1. View All Rooms");
+                Console.WriteLine("\n================ROOM MANAGEMENT=====================");
+                Console.WriteLine("1. View All Rooms.");
                 Console.WriteLine("2. Add New Room");
                 Console.WriteLine("3. Update Room");
                 Console.WriteLine("4. Delete Room");
                 Console.WriteLine("5. Back to Main Menu");
-                Console.Write("Select option: ");
+                Console.WriteLine("Select Option: ");
 
                 var choice = Console.ReadLine();
 
@@ -111,7 +112,7 @@ namespace HotelReservationEngine
                     case "5":
                         return;
                     default:
-                        Console.WriteLine("Invalid option!");
+                        Console.WriteLine("Please Choose Valid Option!");
                         break;
                 }
             }
@@ -121,13 +122,14 @@ namespace HotelReservationEngine
         {
             while (true)
             {
-                Console.WriteLine("\n=== RESERVATION MANAGEMENT ===");
-                Console.WriteLine("1. View All Reservations");
+                Console.WriteLine("\n================RESERVATION MANAGEMENT=====================");
+                Console.WriteLine("1. View All Reservations.");
                 Console.WriteLine("2. Create Reservation");
                 Console.WriteLine("3. Cancel Reservation");
                 Console.WriteLine("4. View Reservation Details");
                 Console.WriteLine("5. Back to Main Menu");
-                Console.Write("Select option: ");
+                Console.WriteLine("Select Option: ");
+
 
                 var choice = Console.ReadLine();
 
@@ -148,7 +150,7 @@ namespace HotelReservationEngine
                     case "5":
                         return;
                     default:
-                        Console.WriteLine("Invalid option!");
+                        Console.WriteLine("Please Choose Valid Option!");
                         break;
                 }
             }
@@ -157,7 +159,7 @@ namespace HotelReservationEngine
         static void ViewAllRooms()
         {
             var rooms = _reservationService.GetAllRooms();
-            Console.WriteLine("\n=== ALL ROOMS ===");
+            Console.WriteLine("\n==============ALL ROOMS=====================");
             foreach (var room in rooms)
             {
                 Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Price: ${room.BasePrice}, Capacity: {room.Capacity}, Available: {room.IsAvailable}");
@@ -166,21 +168,22 @@ namespace HotelReservationEngine
 
         static void AddNewRoom()
         {
-            Console.WriteLine("\n=== ADD NEW ROOM ===");
+            Console.WriteLine("\n==============ADD NEW ROOM=====================");
 
-            Console.Write("Room Number: ");
+            Console.WriteLine("Room Number: ");
             var roomNumber = Console.ReadLine();
 
-            Console.Write("Room Type: ");
+            Console.WriteLine("Room Type: ");
             var type = Console.ReadLine();
 
-            Console.Write("Base Price: ");
+            Console.WriteLine("Base Price: ");
             var basePrice = decimal.Parse(Console.ReadLine());
 
-            Console.Write("Capacity: ");
+            Console.WriteLine("Capacity: ");
             var capacity = int.Parse(Console.ReadLine());
 
-            Console.Write("Description: ");
+
+            Console.WriteLine("Description: ");
             var description = Console.ReadLine();
 
             var room = new Room
@@ -199,21 +202,23 @@ namespace HotelReservationEngine
 
         static void UpdateRoom()
         {
-            Console.Write("Enter Room ID to update: ");
+            Console.Write("Enter Room ID to Update: ");
             var id = int.Parse(Console.ReadLine());
+
 
             var room = _reservationService.GetRoomById(id);
             if (room == null)
             {
-                Console.WriteLine("Room not found!");
+                Console.WriteLine("Room not found");
                 return;
             }
+
 
             Console.Write($"Room Number ({room.RoomNumber}): ");
             var roomNumber = Console.ReadLine();
             if (!string.IsNullOrEmpty(roomNumber)) room.RoomNumber = roomNumber;
 
-            Console.Write($"Type ({room.Type}): ");
+            Console.Write($"Room Type ({room.Type}): ");
             var type = Console.ReadLine();
             if (!string.IsNullOrEmpty(type)) room.Type = type;
 
@@ -222,7 +227,7 @@ namespace HotelReservationEngine
             if (!string.IsNullOrEmpty(priceInput)) room.BasePrice = decimal.Parse(priceInput);
 
             _reservationService.UpdateRoom(room);
-            Console.WriteLine("Room updated successfully!");
+            Console.WriteLine("Room update successfully!");
         }
 
         static void DeleteRoom()
@@ -231,7 +236,7 @@ namespace HotelReservationEngine
             var id = int.Parse(Console.ReadLine());
 
             if (_reservationService.DeleteRoom(id))
-                Console.WriteLine("Room deleted successfully!");
+                Console.WriteLine("Room deleted Successfully!");
             else
                 Console.WriteLine("Room not found!");
         }
@@ -239,7 +244,7 @@ namespace HotelReservationEngine
         static void ViewAllReservations()
         {
             var reservations = _reservationService.GetAllReservations();
-            Console.WriteLine("\n=== ALL RESERVATIONS ===");
+            Console.WriteLine("\n================ALL RESERVATIONS===================");
             foreach (var reservation in reservations)
             {
                 Console.WriteLine($"ID: {reservation.Id}, Guest: {reservation.GuestName}, Room: {reservation.Room?.RoomNumber}, Check-in: {reservation.CheckInDate:yyyy-MM-dd}, Check-out: {reservation.CheckOutDate:yyyy-MM-dd}, Price: ${reservation.TotalPrice}");
@@ -315,54 +320,57 @@ namespace HotelReservationEngine
 
         static void CancelReservation()
         {
-            Console.Write("Enter Reservation ID to cancel: ");
-            var id = int.Parse(Console.ReadLine());
 
+            Console.Write("Enter Reservation IT to Cancel: ");
+            var id = int.Parse(Console.ReadLine());
             if (_reservationService.CancelReservation(id))
-                Console.WriteLine("Reservation cancelled successfully!");
+                Console.WriteLine("Reservation Cancelled successfully!");
             else
-                Console.WriteLine("Reservation not found!");
+                Console.WriteLine("Reservation Not found!");
         }
 
         static void ViewReservationDetails()
         {
-            Console.Write("Enter Reservation ID: ");
+
+            Console.Write("Enter Reservation Id: ");
             var id = int.Parse(Console.ReadLine());
 
             var reservation = _reservationService.GetReservationById(id);
+
             if (reservation == null)
             {
-                Console.WriteLine("Reservation not found!");
+                Console.WriteLine("Reservation Not Found!");
                 return;
             }
-
-            Console.WriteLine("\n=== RESERVATION DETAILS ===");
+            Console.WriteLine("\n========Reservation Details=========");
             Console.WriteLine($"ID: {reservation.Id}");
             Console.WriteLine($"Guest: {reservation.GuestName}");
             Console.WriteLine($"Email: {reservation.GuestEmail}");
             Console.WriteLine($"Phone: {reservation.GuestPhone}");
-            Console.WriteLine($"Room: {reservation.Room?.RoomNumber} ({reservation.Room?.Type})");
+            Console.WriteLine($"Room: {reservation.Room?.RoomNumber}({reservation.Room?.Type})");
             Console.WriteLine($"Check-in: {reservation.CheckInDate:yyyy-MM-dd}");
             Console.WriteLine($"Check-out: {reservation.CheckOutDate:yyyy-MM-dd}");
             Console.WriteLine($"Guests: {reservation.NumberOfGuests}");
-            Console.WriteLine($"Total Price: ${reservation.TotalPrice}");
-            Console.WriteLine($"Special Requests: {reservation.SpecialRequests}");
+            Console.WriteLine($"Total Price: {reservation.TotalPrice}");
+            Console.WriteLine($"Special Request: {reservation.SpecialRequests}");
             Console.WriteLine($"Status: {(reservation.IsCancelled ? "Cancelled" : "Active")}");
         }
 
         static void SearchAvailableRooms()
         {
-            Console.WriteLine("\n=== SEARCH AVAILABLE ROOMS ===");
 
-            Console.Write("Check-in Date (yyyy-MM-dd): ");
+            Console.WriteLine("\n============Search Available Rooms================");
+
+            Console.WriteLine("Check-in Date(yyyy-MM-dd): ");
             var checkIn = DateTime.Parse(Console.ReadLine());
 
-            Console.Write("Check-out Date (yyyy-MM-dd): ");
+            Console.WriteLine("Check-out Date(yyyy-MM-dd): ");
             var checkOut = DateTime.Parse(Console.ReadLine());
 
-            Console.Write("Number of Guests (default 1): ");
+            Console.WriteLine("Number of Guests(default 1): ");
             var guestsInput = Console.ReadLine();
             var guests = string.IsNullOrEmpty(guestsInput) ? 1 : int.Parse(guestsInput);
+
 
             try
             {
@@ -374,12 +382,12 @@ namespace HotelReservationEngine
                     return;
                 }
 
-                Console.WriteLine("\n=== AVAILABLE ROOMS ===");
+                Console.WriteLine("\n==========Available Rooms=============");
                 foreach (var room in availableRooms)
                 {
                     var price = _reservationService.CalculatePrice(room.Id, checkIn, checkOut);
-                    Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Base Price: ${room.BasePrice}/night, Total Price: ${price}, Capacity: {room.Capacity}");
-                    Console.WriteLine($"  Description: {room.Description}");
+                    Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Base Price: ${room.BasePrice}/night, Total Price: ${price}, Capacity: {room.Capacity} ");
+                    Console.WriteLine($"Description: {room.Description}");
                 }
             }
             catch (Exception ex)
