@@ -28,5 +28,7 @@ namespace HotelReservationEngine.Models
         public bool IsAvailable{get; set;} = true;
 
         public ICollection<Reservation> Reservations { get; set; }
+        
     }
+
 }
