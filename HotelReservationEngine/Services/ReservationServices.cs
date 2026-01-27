@@ -110,7 +110,7 @@ namespace HotelReservationEngine.Services
 
             // Get all rooms that can accommodate the number of guests
             var allRooms = _context.Rooms
-                .Where(r => r.Capacity >= guests && r.IsAvailable)
+                .Where(r => r.capacity >= guests && r.IsAvailable)
                 .ToList();
 
             // Filter rooms that are not booked for the given dates

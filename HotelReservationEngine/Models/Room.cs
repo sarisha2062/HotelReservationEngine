@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotatiions;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace HotelReservationEngine.Models

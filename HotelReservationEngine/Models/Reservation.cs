@@ -8,7 +8,7 @@ namespace HotelReservationEngine.Models
     public class Reservation
     {
       
-        [key]
+        
         public int Id{get; set;}
 
         [Required]

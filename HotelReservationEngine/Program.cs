@@ -162,7 +162,7 @@ namespace HotelReservationEngine
             Console.WriteLine("\n==============ALL ROOMS=====================");
             foreach (var room in rooms)
             {
-                Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Price: ${room.BasePrice}, Capacity: {room.Capacity}, Available: {room.IsAvailable}");
+                Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Price: ${room.BasePrice}, Capacity: {room.capacity}, Available: {room.IsAvailable}");
             }
         }
 
@@ -191,8 +191,8 @@ namespace HotelReservationEngine
                 RoomNumber = roomNumber,
                 Type = type,
                 BasePrice = basePrice,
-                Capacity = capacity,
-                Description = description,
+                capacity = capacity,
+                description = description,
                 IsAvailable = true
             };
 
@@ -279,7 +279,7 @@ namespace HotelReservationEngine
                 foreach (var room in availableRooms)
                 {
                     var price = _reservationService.CalculatePrice(room.Id, checkIn, checkOut);
-                    Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Price: ${price}, Capacity: {room.Capacity}");
+                    Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Price: ${price}, Capacity: {room.capacity}");
                 }
 
                 Console.Write("Select Room ID: ");
@@ -386,8 +386,8 @@ namespace HotelReservationEngine
                 foreach (var room in availableRooms)
                 {
                     var price = _reservationService.CalculatePrice(room.Id, checkIn, checkOut);
-                    Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Base Price: ${room.BasePrice}/night, Total Price: ${price}, Capacity: {room.Capacity} ");
-                    Console.WriteLine($"Description: {room.Description}");
+                    Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Base Price: ${room.BasePrice}/night, Total Price: ${price}, Capacity: {room.capacity} ");
+                    Console.WriteLine($"Description: {room.description}");
                 }
             }
             catch (Exception ex)
