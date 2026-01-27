@@ -162,7 +162,7 @@ namespace HotelReservationEngine
             Console.WriteLine("\n==============ALL ROOMS=====================");
             foreach (var room in rooms)
             {
-                Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Price: ${room.BasePrice}, Capacity: {room.capacity}, Available: {room.IsAvailable}");
+                Console.WriteLine($"ID: {room.Id}, Room: {room.RoomNumber}, Type: {room.Type}, Description: {room.description}, Price: ${room.BasePrice}, Capacity: {room.capacity}, Available: {room.IsAvailable}");
             }
         }
 
