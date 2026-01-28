@@ -321,7 +321,7 @@ namespace HotelReservationEngine
         static void CancelReservation()
         {
 
-            Console.Write("Enter Reservation IT to Cancel: ");
+            Console.Write("Enter Reservation ID to Cancel: ");
             var id = int.Parse(Console.ReadLine());
             if (_reservationService.CancelReservation(id))
                 Console.WriteLine("Reservation Cancelled successfully!");
